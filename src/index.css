@@ -1,0 +1,28 @@
+h1 {
+  color: green;
+  font-style: italic;
+}
+
+.notification {
+  padding: 15px;
+  background-color: #4caf50;
+  color: white;
+  border: 1px solid green;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  text-align: center;
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  opacity: 0.9;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease-out;
+}
+
+.error {
+  background-color: #f44336;
+  border: 1px solid red;
+}
