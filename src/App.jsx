@@ -66,9 +66,9 @@ const App = () => {
 
   const addPerson = event => {
     event.preventDefault()
-
+  
     const existingPerson = persons.find(person => person.name === newName);
-
+  
     if (existingPerson) {
       // Jos nimi löytyy jo, kysytään vahvistus numeron päivittämisestä
       if (
@@ -77,7 +77,7 @@ const App = () => {
         )
       ) {
         const updatedPerson = { ...existingPerson, number: newNumber }
-
+  
         personService
           .update(existingPerson.id, updatedPerson)
           .then(returnedPerson => {
@@ -102,20 +102,29 @@ const App = () => {
       }
       return
     }
-
+  
     // Jos henkilö ei ole luettelossa, lisätään uusi
     const newPerson = { name: newName, number: newNumber }
-
-    personService.create(newPerson).then(addedPerson => {
-      setPersons(persons.concat(addedPerson))
-      setNewName('')
-      setNewNumber('')
-      setErrorMessage(`${newName} was added successfully.`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    })
+  
+    personService.create(newPerson)
+      .then(addedPerson => {
+        setPersons(persons.concat(addedPerson))
+        setNewName('')
+        setNewNumber('')
+        setErrorMessage(`${newName} was added successfully.`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        // Virheen näyttäminen, jos validointi epäonnistuu
+        setErrorMessage(`Error: ${error.response.data.error}`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
   }
+  
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
